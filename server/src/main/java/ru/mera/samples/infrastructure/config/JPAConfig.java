@@ -26,13 +26,13 @@ public class JPAConfig {
 
   public static final String HOST = "localhost";
 
-  public static final int PORT = 5432;
+  public static final int PORT = 5429; // I have Native Postgre on 5432!
 
   public static final String USERNAME = "postgres";
 
-  public static final String PASSWORD = "postrges";
+  public static final String PASSWORD = "123";
 
-  public static final String DB_NAME = "test";
+  public static final String DB_NAME = "repo";
 
 
   {
