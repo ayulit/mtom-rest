@@ -3,8 +3,8 @@
     <display-name>MyCompany HR Holiday Service</display-name>
 
     <servlet>
-        <servlet-name>spring-ws</servlet-name>
-        <servlet-class>org.springframework.ws.transport.http.MessageDispatcherServlet</servlet-class>
+        <servlet-name>rest</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <init-param>
             <param-name>contextClass</param-name>
             <param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
@@ -13,13 +13,15 @@
             <param-name>contextConfigLocation</param-name>
             <param-value>ru.mera.samples.infrastructure.config.MtomServerConfiguration</param-value>
         </init-param>
-        <load-on-startup>0</load-on-startup>
+        <load-on-startup>1</load-on-startup>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>spring-ws</servlet-name>
+        <servlet-name>rest</servlet-name>
+        <!-- any URI with the root of this web application will call DispatcherServlet -->
         <url-pattern>/*</url-pattern>
     </servlet-mapping>
+    
     <welcome-file-list>
         <welcome-file>/index.jsp</welcome-file>
         <welcome-file>/WEB-INF/index.html</welcome-file>

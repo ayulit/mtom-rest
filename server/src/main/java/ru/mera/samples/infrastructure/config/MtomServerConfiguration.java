@@ -33,7 +33,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 @EnableWebMvc
 @Import( { JPAConfig.class, AopConfiguration.class } )
-@ComponentScan( "ru.mera.samples.domain.dao" )
+@ComponentScan({"ru.mera.samples.domain.dao","ru.mera.samples.presentation.rest"})
 public class MtomServerConfiguration {
 
   @Bean
