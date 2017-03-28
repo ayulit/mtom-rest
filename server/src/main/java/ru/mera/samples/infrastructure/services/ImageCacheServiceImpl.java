@@ -1,7 +1,7 @@
 package ru.mera.samples.infrastructure.services;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
+
 import ru.mera.samples.domain.entities.ImageEntity;
 
 import javax.annotation.PostConstruct;
@@ -15,7 +15,7 @@ import java.util.Optional;
 
 public class ImageCacheServiceImpl implements ImageCacheService {
 
-  private static final Log logger = LogFactory.getLog(ImageCacheServiceImpl.class);
+  private static final Logger logger = Logger.getLogger(ImageCacheServiceImpl.class);
 
   private Map<String, SoftReference<ImageEntity>> images;
   private Map<Long, SoftReference<ImageEntity>> imagesIds;

@@ -16,8 +16,8 @@
 
 package ru.mera.samples.application.service;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.mera.samples.application.dto.AbstractDTO;
@@ -33,7 +33,7 @@ public abstract class AbstractServiceImpl<T extends AbstractDTO, E extends Abstr
     implements AbstractService<T>
 {
 
-  private static final Log logger = LogFactory.getLog(AbstractServiceImpl.class);
+  private static final Logger logger = Logger.getLogger(AbstractServiceImpl.class);
 
   @Autowired
   protected ModelMapper modelMapper;

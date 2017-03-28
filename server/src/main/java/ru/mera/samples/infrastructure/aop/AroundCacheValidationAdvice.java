@@ -16,8 +16,8 @@
 
 package ru.mera.samples.infrastructure.aop;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
+
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -42,7 +42,7 @@ import java.util.function.Supplier;
 @Aspect
 public class AroundCacheValidationAdvice {
 
-  private static final Log logger = LogFactory.getLog(AroundCacheValidationAdvice.class);
+  private static final Logger logger = Logger.getLogger(AroundCacheValidationAdvice.class);
 
   @Autowired
   private ImageCacheService imageCacheService;

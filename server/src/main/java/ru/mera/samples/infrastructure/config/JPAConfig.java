@@ -1,7 +1,7 @@
 package ru.mera.samples.infrastructure.config;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,17 +22,18 @@ import java.util.Properties;
 @EnableTransactionManagement
 public class JPAConfig {
 
-  private static final Log logger = LogFactory.getLog(ImageServiceImpl.class);
+  private static final Logger logger = Logger.getLogger(ImageServiceImpl.class);
 
   public static final String HOST = "localhost";
 
-  public static final int PORT = 5429; // I have Native Postgre on 5432!
+// Native Postgre on 5432, Embedded on 5429
+  public static final int PORT = 5432; 
 
   public static final String USERNAME = "postgres";
 
   public static final String PASSWORD = "123";
 
-  public static final String DB_NAME = "repo";
+  public static final String DB_NAME = "mtom_repo";
 
 
   {
@@ -73,6 +74,11 @@ public class JPAConfig {
 
   private Properties getJPAProperties() {
     Properties properties = new Properties();
+    
+	// xlitand: 
+	// Drop and re-create the database schema on startup,
+	// -create: every time
+	// -update: if ONLY model changed!
     properties.setProperty("hibernate.hbm2ddl.auto", "create");
     properties.setProperty("hibernate.show_sql", "true");
     properties.setProperty("hibernate.format_sql", "true");

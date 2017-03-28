@@ -16,8 +16,8 @@
 
 package ru.mera.samples.infrastructure.aop;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
+
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
@@ -35,7 +35,7 @@ import java.util.Optional;
 @Aspect
 public class BeforeAfterLogAdvice {
 
-  private static final Log logger = LogFactory.getLog(BeforeAfterLogAdvice.class);
+  private static final Logger logger = Logger.getLogger(BeforeAfterLogAdvice.class);
 
   @Pointcut( "within(org.springframework.ws.samples.mtom.service.*)" )
   public void inImageRepositoryEndpoint() {

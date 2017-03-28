@@ -16,8 +16,8 @@
 
 package ru.mera.samples.application.service;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.mera.samples.application.dto.AddressDTO;
 import ru.mera.samples.domain.dao.AddressRepository;
@@ -26,7 +26,7 @@ import ru.mera.samples.domain.entities.AddressEntity;
 
 public class AddressServiceImpl extends AbstractServiceImpl<AddressDTO,AddressEntity> implements AddressService {
 
-  private static final Log logger = LogFactory.getLog(AddressServiceImpl.class);
+  private static final Logger logger = Logger.getLogger(AddressServiceImpl.class);
 
   @Autowired
   private AddressRepository imageRepository;
