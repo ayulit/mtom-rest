@@ -13,9 +13,8 @@ buildscript {
 }
 
 ext.tomcatVersion =       '7.0.42'
-ext.postgresqlVersion = '9.0-801.jdbc4'
+ext.postgresqlVersion = '9.4-1206-jdbc42'
 ext.hibernateVersion  = '4.1.9.Final'
-ext.log4jVersion  = '1.2.17'
 
 
 apply plugin: 'war'
@@ -63,18 +62,6 @@ tomcatRun {
 	contextPath = 'mtom-server'
 }
 
-// xlitand: to avoid 
-configurations.all {
-	resolutionStrategy { 
-		eachDependency { DependencyResolveDetails details ->
-			
-			if (details.requested.name == 'slf4j-api') {
-				details.useTarget "log4j:log4j:$log4jVersion"
-			}			
-		}
-	}
-}
-
 dependencies {
     compile("org.springframework.ws:spring-ws-core:$springWsVersion")
     compile("org.springframework:spring-context:$springVersion")	
@@ -93,7 +80,7 @@ dependencies {
 	compile("org.springframework:spring-aspects:$springVersion")
 	
 	// xlitand: PostgreSQL Drivers
-	compile("postgresql:postgresql:$postgresqlVersion")
+	compile("org.postgresql:postgresql:$postgresqlVersion")
 	
 	// xlitand: JDBC interaction with database
 	compile("org.springframework:spring-jdbc:$springVersion")
@@ -120,18 +107,31 @@ dependencies {
 	compile("org.springframework:spring-orm:$springVersion")
 	
     compile("com.fasterxml.jackson.core:jackson-databind:2.7.7")
+
+	/********** Spring Boot *********/
+	compile("org.springframework.boot:spring-boot-starter-web:1.2.3.RELEASE") {
+		// dealing with some 'slf4j' mishaps
+		exclude module : 'spring-boot-starter-logging'
+	}
+	    
+    /********** Logging *********/  
+	compile("org.slf4j:slf4j-api:1.7.7")
+    compile("ch.qos.logback:logback-classic:1.1.2")
+
+//  compile("org.slf4j:slf4j-log4j12:1.7.12") // commented by Yura	
+//  runtime("wsdl4j:wsdl4j:1.6.1")            // xlitand: what's this ?!...
+
+       
+    // xlitand: H2 Database 
+    compile("com.h2database:h2:1.4.181")
+
+    // xlitand:  For using BasicDataSource in JPAConfig
+    compile("org.apache.commons:commons-dbcp2:2.1")
     
-	
-	// go to hell, slf4j  
-//	compile("org.slf4j:slf4j-api:1.7.7")	
-//  compile("org.slf4j:slf4j-log4j12:1.7.12") // commented by Yura
-
-	// xlitand: 'org.apache.log4j.Logger' needs 'compile' in some reason... 
-    compile("log4j:log4j:$log4jVersion")
-	
-	// xlitand: WTF ?!...
-//    runtime("wsdl4j:wsdl4j:1.6.1")
-
+    // xlitand:  needed for correct dataSource work
+    compile group: 'commons-pool', name: 'commons-pool', version: '1.6'
+    
+        
 	jaxb "com.sun.xml.bind:jaxb-xjc:2.1.7"	
 
 	tomcat("org.apache.tomcat.embed:tomcat-embed-core:$tomcatVersion",

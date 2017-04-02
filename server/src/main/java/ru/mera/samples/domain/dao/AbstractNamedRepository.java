@@ -1,6 +1,7 @@
 package ru.mera.samples.domain.dao;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ru.mera.samples.domain.entities.AbstractNamedEntity;
 import org.springframework.stereotype.Repository;
@@ -17,7 +18,7 @@ import javax.persistence.criteria.ParameterExpression;
 @Transactional( readOnly = false )
 public abstract class AbstractNamedRepository<T extends AbstractNamedEntity> extends AbstractRepository<T> implements NamedEntityRepository<T> {
 
-  private static final Logger logger = Logger.getLogger(AbstractNamedRepository.class);
+  private static final Logger logger = LoggerFactory.getLogger(AbstractNamedRepository.class);
 
   @PersistenceContext
   protected EntityManager entityManager;

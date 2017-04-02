@@ -1,6 +1,7 @@
 package ru.mera.samples.application.service;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.BeanNameAware;
 import ru.yandex.qatools.embed.service.EmbeddedService;
 
@@ -11,7 +12,7 @@ import java.io.IOException;
 
 public class EmbeddedServiceBean implements BeanNameAware{
 
-  private static final Logger logger = Logger.getLogger(EmbeddedServiceBean.class);
+  private static final Logger logger = LoggerFactory.getLogger(EmbeddedServiceBean.class);
   
   private EmbeddedService service;
 
@@ -20,6 +21,7 @@ public class EmbeddedServiceBean implements BeanNameAware{
 
   @PostConstruct
   public void start() throws IOException {
+   // TODO use later with Embedded PostgreSQL      
 /*    logger.info("EmbeddedService " + name + ": starting");
     try {
       service.start();
@@ -32,6 +34,7 @@ public class EmbeddedServiceBean implements BeanNameAware{
 
   @PreDestroy
   public void stop() {
+   // TODO use later with Embedded PostgreSQL      
 /*    logger.info("EmbeddedService " + name + ": stopping");
     try {
       service.stop();

@@ -1,6 +1,7 @@
 package ru.mera.samples.domain.dao;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import ru.mera.samples.domain.entities.AbstractEntity;
 import org.springframework.stereotype.Repository;
@@ -20,7 +21,7 @@ import java.util.List;
 @Transactional( readOnly = false )
 public abstract class AbstractRepository<T extends AbstractEntity> implements EntityRepository<T> {
 
-  private static final Logger logger = Logger.getLogger(AbstractRepository.class);
+  private static final Logger logger = LoggerFactory.getLogger(AbstractRepository.class);
 
   protected Class<T> persistentClass;
 

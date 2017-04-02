@@ -16,7 +16,8 @@
 
 package ru.mera.samples.application.service;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.mera.samples.application.dto.ImageDTO;
@@ -26,7 +27,7 @@ import ru.mera.samples.domain.entities.ImageEntity;
 
 public class ImageServiceImpl extends AbstractServiceImpl<ImageDTO, ImageEntity> implements ImageService {
 
-  private static final Logger logger = Logger.getLogger(ImageServiceImpl.class);
+  private static final Logger logger = LoggerFactory.getLogger(ImageServiceImpl.class);
 
   @Autowired
   private ImageRepository imageRepository;

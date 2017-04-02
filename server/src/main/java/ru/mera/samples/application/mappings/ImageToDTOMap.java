@@ -1,7 +1,8 @@
 package ru.mera.samples.application.mappings;
 
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.modelmapper.PropertyMap;
 import ru.mera.samples.application.dto.ImageDTO;
@@ -14,7 +15,7 @@ import java.io.IOException;
 
 public class ImageToDTOMap extends PropertyMap<ImageEntity, ImageDTO> {
 
-  private static final Logger logger = Logger.getLogger(ImageToDTOMap.class);
+  private static final Logger logger = LoggerFactory.getLogger(ImageToDTOMap.class);
 
   protected void configure() {
     BufferedImage resultImage = null;

@@ -16,7 +16,8 @@
 
 package ru.mera.samples.application.service;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ import ru.mera.samples.domain.entities.UserEntity;
 
 public class UserServiceImpl extends AbstractServiceImpl<UserDTO, UserEntity> implements UserService {
 
-  private static final Logger logger = Logger.getLogger(UserServiceImpl.class);
+  private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
 
   @Autowired
