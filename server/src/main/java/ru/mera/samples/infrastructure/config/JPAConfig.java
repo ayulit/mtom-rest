@@ -1,11 +1,17 @@
 package ru.mera.samples.infrastructure.config;
 
-import org.apache.log4j.Logger;
+import org.apache.commons.dbcp2.BasicDataSource;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.core.env.Environment;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -18,53 +24,54 @@ import ru.yandex.qatools.embed.service.PostgresEmbeddedService;
 import java.io.IOException;
 import java.util.Properties;
 
+import javax.sql.DataSource;
+
 @Configuration
 @EnableTransactionManagement
 public class JPAConfig {
 
-  private static final Logger logger = Logger.getLogger(ImageServiceImpl.class);
+  private static final Logger logger = LoggerFactory.getLogger(ImageServiceImpl.class);
 
-  public static final String HOST = "localhost";
-
-// Native Postgre on 5432, Embedded on 5429
-  public static final int PORT = 5432; 
-
-  public static final String USERNAME = "postgres";
-
-  public static final String PASSWORD = "123";
-
-  public static final String DB_NAME = "mtom_repo";
-
+  @Autowired
+  private Environment environment;
 
   {
     logger.info("JPA Configuration loaded.");
   }
 
   @Bean
-  public JpaTransactionManager jpaTransMan() {
+  public JpaTransactionManager transactionManager() {
     JpaTransactionManager jtManager = new JpaTransactionManager(entityManagerFactory().getObject());
     return jtManager;
   }
 
   @Bean
-  @DependsOn( "embeddedServiceBean" )
+//  @DependsOn( "embeddedServiceBean" ) // TODO use later with Embedded PostgreSQL
   public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
     LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
+    
+    factoryBean.setDataSource(dataSource());
+    
+    // Actually not used...
     factoryBean.setPersistenceUnitName("PersistenceUnit");
+    
+    // JPA features...?
     JpaVendorAdapter hibernateVendorAdapter = new HibernateJpaVendorAdapter();
     factoryBean.setJpaVendorAdapter(hibernateVendorAdapter);
+    
     String[] packages = { "org.mera.samples.domain.entities" };
     factoryBean.setPackagesToScan(packages);
     factoryBean.setJpaProperties(getJPAProperties());
     return factoryBean;
   }
 
-  @Bean
+//  TODO use later this Embedded PostgreSQL
+/*  @Bean
   public EmbeddedServiceBean embeddedServiceBean() throws IOException {
     EmbeddedServiceBean embeddedServiceBean = new EmbeddedServiceBean();
     embeddedServiceBean.setService(new PostgresEmbeddedService(getHost(), getPort(), getUsername(), getPassword(), getDbName()));
     return embeddedServiceBean;
-  }
+  }*/
 
   @Bean
   public ModelMapper modelMapper() throws IOException {
@@ -73,41 +80,50 @@ public class JPAConfig {
   }
 
   private Properties getJPAProperties() {
-    Properties properties = new Properties();
+    final Properties properties = new Properties();
     
-	// xlitand: 
+    properties.setProperty("hibernate.dialect", environment.getRequiredProperty("hibernate.dialect"));
+    properties.setProperty("hibernate.show_sql", "true");
+    properties.setProperty("hibernate.temp.use_jdbc_metadata_defaults", "false"); // from REST book    
+
+    // xlitand: 
 	// Drop and re-create the database schema on startup,
 	// -create: every time
 	// -update: if ONLY model changed!
-    properties.setProperty("hibernate.hbm2ddl.auto", "create");
-    properties.setProperty("hibernate.show_sql", "true");
-    properties.setProperty("hibernate.format_sql", "true");
-    properties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
-    properties.setProperty("javax.persistence.jdbc.driver", "org.postgresql.Driver");
-    properties.setProperty("javax.persistence.jdbc.url", "jdbc:postgresql://"+ getHost() +":"+ getPort() +"/"+
-        getDbName());
-    properties.setProperty("javax.persistence.jdbc.user", getUsername());
-    properties.setProperty("javax.persistence.jdbc.password", getPassword());
+    properties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
+    
+//    properties.setProperty("hibernate.format_sql", "true"); // from Yura
+    
     return properties;
+  }
+  
+  
+  private DataSource dataSource() {
+
+      DriverManagerDataSource  ds = new DriverManagerDataSource ();
+      
+      ds.setUrl(environment.getRequiredProperty("jdbc.url"));     
+      ds.setUsername(getUsername());
+      ds.setPassword(getPassword());
+//      ds.setMaxTotal(Integer.valueOf(environment.getRequiredProperty("jdbc.maxConnections"))); // from REST book
+      ds.setDriverClassName(environment.getRequiredProperty("jdbc.driver"));
+
+      return ds;
   }
 
   private String getPassword() {
-    return PASSWORD;
+    return environment.getRequiredProperty("jdbc.password");
   }
-
   private String getUsername() {
-    return USERNAME;
+    return environment.getRequiredProperty("jdbc.username");
   }
-
   private String getDbName() {
-    return DB_NAME;
+    return environment.getRequiredProperty("jdbc.dbname");
   }
-
-  private int getPort() {
-    return PORT;
+  private String getPort() {
+    return environment.getRequiredProperty("jdbc.port");
   }
-
   private String getHost() {
-    return HOST;
+    return environment.getRequiredProperty("jdbc.host");
   }
 } 
