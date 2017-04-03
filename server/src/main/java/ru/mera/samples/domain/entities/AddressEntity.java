@@ -13,7 +13,7 @@ import java.util.List;
 @Inheritance( strategy = InheritanceType.JOINED )
 public class AddressEntity extends AbstractEntity {
 
-  @Column
+//  @Column // not needed here
   @OneToMany
   List<UserEntity> residents;
 

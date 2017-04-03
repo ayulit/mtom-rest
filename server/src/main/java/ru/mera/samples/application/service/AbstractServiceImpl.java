@@ -21,6 +21,9 @@ import org.slf4j.LoggerFactory;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import ru.mera.samples.presentation.rest.RecordNotFoundException;
+
 import ru.mera.samples.application.dto.AbstractDTO;
 import ru.mera.samples.domain.dao.EntityRepository;
 import ru.mera.samples.domain.entities.AbstractEntity;
@@ -58,6 +61,12 @@ public abstract class AbstractServiceImpl<T extends AbstractDTO, E extends Abstr
   @Override
   public T read(Long id) {
     AbstractEntity abstractEntity = getRepository().findById(id);
+
+    // xlitand: Needed for DB filling in Spring Boot. TODO delete in production.
+    if (abstractEntity == null) {
+        throw new RecordNotFoundException("No record with ID " + id);
+    }
+
     T              addressDTO     = modelMapper.map(abstractEntity, dtoClass);
     return addressDTO;
   }

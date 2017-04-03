@@ -59,7 +59,7 @@ public class JPAConfig {
     JpaVendorAdapter hibernateVendorAdapter = new HibernateJpaVendorAdapter();
     factoryBean.setJpaVendorAdapter(hibernateVendorAdapter);
     
-    String[] packages = { "org.mera.samples.domain.entities" };
+    String[] packages = { "ru.mera.samples.domain.entities" };
     factoryBean.setPackagesToScan(packages);
     factoryBean.setJpaProperties(getJPAProperties());
     return factoryBean;
@@ -92,15 +92,16 @@ public class JPAConfig {
 	// -update: if ONLY model changed!
     properties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
     
-//    properties.setProperty("hibernate.format_sql", "true"); // from Yura
+    // from Yura: cool feature! Really makes SQL queries nice :)
+    properties.setProperty("hibernate.format_sql", "true");
     
     return properties;
   }
   
   
   private DataSource dataSource() {
-
-      DriverManagerDataSource  ds = new DriverManagerDataSource ();
+      // DriverManagerDataSource is also acceptable.
+      BasicDataSource  ds = new BasicDataSource ();
       
       ds.setUrl(environment.getRequiredProperty("jdbc.url"));     
       ds.setUsername(getUsername());

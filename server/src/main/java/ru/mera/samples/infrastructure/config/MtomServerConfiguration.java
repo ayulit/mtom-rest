@@ -33,7 +33,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableAspectJAutoProxy
 @EnableSwagger2
 @EnableWebMvc
-@PropertySource("classpath:conf/h2.properties")
+@PropertySource("classpath:conf/psql.properties")
 @Import( { JPAConfig.class, AopConfiguration.class } )
 @ComponentScan({"ru.mera.samples.domain.dao","ru.mera.samples.presentation.rest"})
 public class MtomServerConfiguration {
