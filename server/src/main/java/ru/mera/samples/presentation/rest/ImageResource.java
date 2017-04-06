@@ -1,6 +1,12 @@
 package ru.mera.samples.presentation.rest;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.net.URI;
+
+import javax.imageio.ImageIO;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,7 +40,19 @@ public class ImageResource {
         // It provides a useful decoupling between the persistence and presentation layers.
         ImageDTO imageDTO = imageService.read(id);
 
+        // TODO IMPORTANT!!! Remove this block on production and while testing
+        BufferedImage bufferedImage = imageDTO.getImage();
+        File outputfile = new File("image.png");
+        try {
+            ImageIO.write(bufferedImage, "png", outputfile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        imageDTO.setImage(null);
+        
         return imageDTO;
+        
+        
     }
 
     @RequestMapping(method = RequestMethod.POST)
