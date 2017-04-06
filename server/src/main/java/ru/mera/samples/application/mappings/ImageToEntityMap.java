@@ -3,6 +3,13 @@ package ru.mera.samples.application.mappings;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
 import org.modelmapper.AbstractConverter;
 import org.modelmapper.Converter;
 import org.modelmapper.PropertyMap;
@@ -15,11 +22,26 @@ public class ImageToEntityMap extends PropertyMap<ImageDTO, ImageEntity> {
 
     private static final Logger logger = LoggerFactory.getLogger(ImageToEntityMap.class);
 
-    Converter<String, String> converter = new AbstractConverter<String, String>() {
+    Converter<BufferedImage, byte[]> converter = new AbstractConverter<BufferedImage, byte[]>() {
 
         @Override
-        protected String convert(String source) {
-            return source == null ? null : source.toUpperCase();
+        protected byte[] convert(BufferedImage source) {
+            
+            if (source == null) {
+                return null;
+            } else {
+                
+                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+
+                try {
+                    ImageIO.write(source, "png", bos);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                
+                return bos.toByteArray();
+                
+            }
         }
     };
     
@@ -38,7 +60,7 @@ public class ImageToEntityMap extends PropertyMap<ImageDTO, ImageEntity> {
         
     }*/
 
-        using(converter).map(source.getName(), destination.getName());
+        using(converter).map(source.getImage(), destination.getImage());
 
     }
 
