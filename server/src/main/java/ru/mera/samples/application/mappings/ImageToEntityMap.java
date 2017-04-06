@@ -19,7 +19,6 @@ public class ImageToEntityMap extends PropertyMap<ImageDTO, ImageEntity> {
 
         @Override
         protected String convert(String source) {
-            // TODO Auto-generated method stub
             return source == null ? null : source.toUpperCase();
         }
     };
@@ -39,7 +38,7 @@ public class ImageToEntityMap extends PropertyMap<ImageDTO, ImageEntity> {
         
     }*/
 
-        using(converter).map().setName(source.getName());
+        using(converter).map(source.getName(), destination.getName());
 
     }
 
