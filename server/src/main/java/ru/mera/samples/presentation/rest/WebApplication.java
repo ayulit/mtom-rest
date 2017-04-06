@@ -3,6 +3,8 @@ package ru.mera.samples.presentation.rest;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 
@@ -11,8 +13,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.io.Resource;
 
+import ru.mera.samples.application.dto.AddressDTO;
 import ru.mera.samples.application.dto.ImageDTO;
+import ru.mera.samples.application.dto.UserDTO;
+import ru.mera.samples.application.service.AddressService;
 import ru.mera.samples.application.service.ImageService;
+import ru.mera.samples.application.service.UserService;
 import ru.mera.samples.infrastructure.config.MtomServerConfiguration;
 
 @SpringBootApplication
@@ -23,6 +29,8 @@ public class WebApplication {
                 SpringApplication.run(new Object[] {WebApplication.class, MtomServerConfiguration.class}, args);
 
         ImageService imageService = context.getBean(ImageService.class);
+        UserService userService = context.getBean(UserService.class);
+        AddressService addressService = context.getBean(AddressService.class);
         
         String fileName = "spring-ws-logo.png";
 
@@ -32,7 +40,6 @@ public class WebApplication {
 
         } catch (RecordNotFoundException e) {
 
-            /* Let's create default data */
             
             // Way of loading classpath resources
             Resource resource = context.getResource("classpath:" + fileName);
@@ -51,8 +58,6 @@ public class WebApplication {
                 // The line that reads the image file. Throws IOException.
                 BufferedImage image = ImageIO.read(file);
 
-                /* work with the image here ... */
-
                 ImageDTO dtObject = new ImageDTO();
 
                 dtObject.setName(fileName);
@@ -60,6 +65,35 @@ public class WebApplication {
 
                 // Persisting image to DB here ...
                 imageService.create(dtObject);
+                
+                
+//                AddressDTO addressDTO = new AddressDTO();
+//                addressDTO.setCountry("Tatuin");
+//                addressDTO.setRegion("West Wastelands");
+//                addressDTO.setTown("Desert town");
+//                addressDTO.setStreet("Tumbleweed str");
+//                addressDTO.setHouse("1b");
+                
+//                Map<Long, String> residents = new HashMap<>();
+//                residents.put(1L, "Luke Skywalker");
+//                residents.put(2L, "C3PO");
+//                                
+//                addressDTO.setResidents(residents);
+
+//                addressService.create(addressDTO);
+//                
+//                
+//                UserDTO userDTO = new UserDTO();
+//                userDTO.setLogin("jedi");
+//                userDTO.setFirstName("Luke");
+//                userDTO.setLastName("Skywalker");
+//                userDTO.setAddress("What this for?");
+
+//                userDTO.setAddressId(1L);
+                
+//                userService.create(userDTO);
+                
+                
 
             } catch (IOException e1) {
                 

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -17,6 +18,10 @@ import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import ru.mera.samples.application.mappings.ImageToDTOMap;
+import ru.mera.samples.application.mappings.ImageToEntityMap;
+import ru.mera.samples.application.mappings.UserToEntityMap;
 import ru.mera.samples.application.service.EmbeddedServiceBean;
 import ru.mera.samples.application.service.ImageServiceImpl;
 import ru.yandex.qatools.embed.service.PostgresEmbeddedService;
@@ -30,7 +35,7 @@ import javax.sql.DataSource;
 @EnableTransactionManagement
 public class JPAConfig {
 
-  private static final Logger logger = LoggerFactory.getLogger(ImageServiceImpl.class);
+  private static final Logger logger = LoggerFactory.getLogger(JPAConfig.class);
 
   @Autowired
   private Environment environment;
@@ -74,8 +79,14 @@ public class JPAConfig {
   }*/
 
   @Bean
+//  @Lazy
   public ModelMapper modelMapper() throws IOException {
     ModelMapper modelMapper = new ModelMapper();
+//    modelMapper.addMappings(new UserToEntityMap());
+    
+    modelMapper.addMappings(new ImageToEntityMap());
+//    modelMapper.addMappings(new ImageToDTOMap());
+    
     return modelMapper;
   }
 
