@@ -82,10 +82,11 @@ public class JPAConfig {
 //  @Lazy
   public ModelMapper modelMapper() throws IOException {
     ModelMapper modelMapper = new ModelMapper();
-//    modelMapper.addMappings(new UserToEntityMap());
     
     modelMapper.addMappings(new ImageToEntityMap());
-//    modelMapper.addMappings(new ImageToDTOMap());
+    modelMapper.addMappings(new ImageToDTOMap());
+
+    modelMapper.addMappings(new UserToEntityMap());
     
     return modelMapper;
   }

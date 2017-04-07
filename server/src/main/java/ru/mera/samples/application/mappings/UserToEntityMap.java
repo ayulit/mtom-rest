@@ -17,12 +17,17 @@ public class UserToEntityMap extends PropertyMap<UserDTO, UserEntity> {
   private AddressRepository addressRepository;
 
   protected void configure() {
-    Long          addressId = source.getAddressId();
+
+      String login = source.getLogin();      
+      map().setName(login);
+      
+      /*    Long          addressId = source.getAddressId();
     AddressEntity address   = null;
     if( addressId != null && addressId >= 0 ) {
       address = addressRepository.findById(addressId);
     }
-    map().setAddress(address);
+    map().setAddress(address);*/
+            
   }
 }
 
