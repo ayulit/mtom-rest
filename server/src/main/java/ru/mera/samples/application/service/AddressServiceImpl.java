@@ -32,6 +32,7 @@ public class AddressServiceImpl extends AbstractServiceImpl<AddressDTO,AddressEn
   @Autowired
   private AddressRepository addressRepository;
 
+  // XXX Why protected not public ?!
   @Override
   protected AddressRepository getRepository() {
     return addressRepository;
