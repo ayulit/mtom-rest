@@ -131,7 +131,11 @@ dependencies {
     // xlitand:  needed for correct dataSource work
     compile group: 'commons-pool', name: 'commons-pool', version: '1.6'
     
-        
+    // Test Dependencies
+    // junit dependency is in main build.gradle
+    testCompile("org.springframework:spring-test:$springVersion")
+
+            
 	jaxb "com.sun.xml.bind:jaxb-xjc:2.1.7"	
 
 	tomcat("org.apache.tomcat.embed:tomcat-embed-core:$tomcatVersion",
