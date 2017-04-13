@@ -41,8 +41,8 @@ public class BeforeAfterLogAdvice {
   @Pointcut( "within(org.springframework.ws.samples.mtom.service.*)" )
   public void inImageRepositoryEndpoint() {
   }
-
-  @Before( "inImageRepositoryEndpoint()" )
+  // TODO Enable after security implementation
+/*  @Before( "inImageRepositoryEndpoint()" )
   public void before(JoinPoint joinPoint) {
     final String[] principals = new String[1];
     Optional.of(SecurityContextHolder.getContext()).ifPresent(
@@ -58,7 +58,7 @@ public class BeforeAfterLogAdvice {
         securityContext -> Optional.of(securityContext.getAuthentication()).ifPresent(
             authentication -> Optional.of(authentication.getPrincipal()).ifPresent(o -> principals[0] = o.toString())));
     logger.info("After method: " + joinPoint.getSignature().getName() + " by user " + principals);
-  }
+  }*/
 
 
 }

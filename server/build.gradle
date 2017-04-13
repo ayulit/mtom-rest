@@ -68,6 +68,8 @@ dependencies {
 	compile("org.springframework:spring-tx:$springVersion")	
 	compile("org.springframework:spring-web:$springVersion")
 	compile("org.springframework:spring-webmvc:$springVersion")
+    
+    // xlitand: security
 	compile("org.springframework.security:spring-security-web:$springSecurityVersion")
 	compile("org.springframework.security:spring-security-config:$springSecurityVersion")
 
