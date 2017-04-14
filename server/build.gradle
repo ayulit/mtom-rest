@@ -69,9 +69,9 @@ dependencies {
 	compile("org.springframework:spring-web:$springVersion")
 	compile("org.springframework:spring-webmvc:$springVersion")
     
-    // xlitand: security
-	compile("org.springframework.security:spring-security-web:$springSecurityVersion")
-	compile("org.springframework.security:spring-security-config:$springSecurityVersion")
+    // xlitand: security TODO enabale when needed
+//	compile("org.springframework.security:spring-security-web:$springSecurityVersion")
+//	compile("org.springframework.security:spring-security-config:$springSecurityVersion")
 
 	// xlitand: using spring aop
 	compile("org.springframework:spring-aop:$springVersion")

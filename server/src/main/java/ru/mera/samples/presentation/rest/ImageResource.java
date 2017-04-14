@@ -41,14 +41,14 @@ public class ImageResource {
         ImageDTO imageDTO = imageService.read(id);
 
         // TODO IMPORTANT!!! Remove this block on production and while testing
-        BufferedImage bufferedImage = imageDTO.getImage();
+/*        BufferedImage bufferedImage = imageDTO.getImage();
         File outputfile = new File("image.png");
         try {
             ImageIO.write(bufferedImage, "png", outputfile);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        imageDTO.setImage(null);
+        imageDTO.setImage(null);*/
         
         return imageDTO;
         

@@ -13,6 +13,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.io.Resource;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import ru.mera.samples.application.dto.AddressDTO;
 import ru.mera.samples.application.dto.ImageDTO;
 import ru.mera.samples.application.dto.UserDTO;
@@ -90,7 +92,10 @@ public class WebApplication {
                 userDTO.setAddressId(1L);
                
                 userService.create(userDTO);
-                
+
+                // XXX Way to see how JSON will look
+//                String serializedImage = new ObjectMapper().writeValueAsString(dtObject);
+//                System.out.println("serialized image" + serializedImage);
                 
 
             } catch (IOException e1) {
