@@ -88,7 +88,7 @@ public abstract class AbstractServiceImpl<T extends AbstractDTO, E extends Abstr
   @Override
   public void delete(Long id) {
     E abstractEntity = getRepository().findById(id);
-    getRepository().save(abstractEntity);
+    getRepository().delete(abstractEntity);
   }
 
   protected abstract EntityRepository<E> getRepository();

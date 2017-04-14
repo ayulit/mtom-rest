@@ -34,7 +34,8 @@ public class WebApplication {
         UserService userService = context.getBean(UserService.class);
         AddressService addressService = context.getBean(AddressService.class);
         
-        String fileName = "spring-ws-logo.png";
+        String fileName = "fry.png";
+        //String fileName = "spring-ws-logo.png";
         //String fileName = "bender.png";
 
         try {

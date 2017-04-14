@@ -3,7 +3,6 @@ package ru.mera.samples.presentation.rest;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
 
 import javax.imageio.ImageIO;
 
@@ -49,7 +48,6 @@ public class ImageResource {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        imageDTO.setImage(null);
         
         return imageDTO;
         
@@ -76,20 +74,11 @@ public class ImageResource {
         return imageDTO;
     }
     
-/*	@RequestMapping(method=RequestMethod.POST)
-	public Response addImage(ImageDTO image, @Context UriInfo uriInfo) {
-				
-		ImageDTO newImage = imageService.addImage(image); 
-		String newId = String.valueOf(newImage.getId());
-		
-		// we will use getAbsolutePathBuilder() for added resource URI construction
-		URI uri = uriInfo.getAbsolutePathBuilder().path(newId).build(); 
-		
-		// we will return Response builder
-		// .created() instead of .status(Status.CREATED) to get 201 code
-		// and send URI back
-		return Response.created(uri)
-		               .entity(newMessage)
-		               .build();
-	}*/
+    @RequestMapping(value = "/{imageId}", method = RequestMethod.DELETE)
+    public void deleteImage(@PathVariable("imageId") long id) {
+            
+        // TODO implement try-catch with RecordNotFoundException
+        imageService.delete(id);
+    }
+    
 }
