@@ -21,17 +21,16 @@ public class ImageSerializer extends JsonSerializer<BufferedImage> {
         try {
 
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            ImageIO.write( value, "png", baos ); // png is lossless ?!
+            ImageIO.write( value, "png", baos ); // png is lossless
             baos.flush();
             byte[] imageInByte = baos.toByteArray();
             baos.close();
             
-            gen.writeObject(Base64.getEncoder().encode(imageInByte));
+            gen.writeObject(imageInByte);
             
-            
-            }catch(IOException e){
+        } catch(IOException e) {
                 System.out.println(e.getMessage());
-            }
+        }
         
     } 
 
