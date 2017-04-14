@@ -3,6 +3,7 @@ package ru.mera.samples.application.dto;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Base64;
 
 import javax.imageio.ImageIO;
 
@@ -25,8 +26,9 @@ public class ImageSerializer extends JsonSerializer<BufferedImage> {
             byte[] imageInByte = baos.toByteArray();
             baos.close();
             
-            gen.writeObject(imageInByte);
-
+            gen.writeObject(Base64.getEncoder().encode(imageInByte));
+            
+            
             }catch(IOException e){
                 System.out.println(e.getMessage());
             }
