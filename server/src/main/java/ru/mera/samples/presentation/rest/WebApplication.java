@@ -72,7 +72,7 @@ public class WebApplication {
                 
                 
                 AddressDTO addressDTO = new AddressDTO();
-                addressDTO.setCountry("Tatuin");
+                addressDTO.setCountry("Planet Tatuin");
                 addressDTO.setRegion("West Wastelands");
                 addressDTO.setTown("Desert town");
                 addressDTO.setStreet("Tumbleweed str");
@@ -85,6 +85,15 @@ public class WebApplication {
 
                 addressService.create(addressDTO);
 
+                // creating second address
+                addressDTO.setCountry("England");
+                addressDTO.setRegion("London");
+                addressDTO.setTown("City of London");
+                addressDTO.setStreet("Baker str");
+                addressDTO.setHouse("221b");              
+                addressService.create(addressDTO);
+                
+                
                 UserDTO userDTO = new UserDTO();
                 userDTO.setLogin("jedi");
                 userDTO.setFirstName("Luke");
