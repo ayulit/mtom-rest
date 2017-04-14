@@ -27,6 +27,7 @@ public class ImageResource {
     // Is it necessary? See Spring-REST-Book.
     public ImageResource() {}
     
+    // TODO delete on production
 	@RequestMapping(value="/hello", method=RequestMethod.GET)
 	public String getTestString() {
 		return "Hello!";
@@ -60,7 +61,20 @@ public class ImageResource {
         imageService.create(image);
         return image;
     }
-    
+
+    @RequestMapping(value = "/{imageId}", method = RequestMethod.PUT)
+    public ImageDTO updateImage(@PathVariable("imageId") long id, @RequestBody ImageDTO updatedImage) {
+
+        // TODO implement try-catch with RecordNotFoundException
+        ImageDTO imageDTO = imageService.read(id);
+        
+        imageDTO.setName(updatedImage.getName());
+        imageDTO.setImage(updatedImage.getImage());
+        
+        imageService.update(imageDTO);
+
+        return imageDTO;
+    }
     
 /*	@RequestMapping(method=RequestMethod.POST)
 	public Response addImage(ImageDTO image, @Context UriInfo uriInfo) {

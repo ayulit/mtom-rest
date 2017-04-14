@@ -35,6 +35,7 @@ public class WebApplication {
         AddressService addressService = context.getBean(AddressService.class);
         
         String fileName = "spring-ws-logo.png";
+        //String fileName = "bender.png";
 
         try {
 
