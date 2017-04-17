@@ -8,6 +8,8 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -18,6 +20,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import ru.mera.samples.application.dto.AddressDTO;
 import ru.mera.samples.application.dto.ImageDTO;
 import ru.mera.samples.application.dto.UserDTO;
+import ru.mera.samples.application.mappings.ImageToEntityMap;
 import ru.mera.samples.application.service.AddressService;
 import ru.mera.samples.application.service.ImageService;
 import ru.mera.samples.application.service.UserService;
@@ -25,6 +28,8 @@ import ru.mera.samples.infrastructure.config.MtomServerConfiguration;
 
 @SpringBootApplication
 public class WebApplication {
+    
+    private static final Logger logger = LoggerFactory.getLogger(WebApplication.class);
 
 	public static void main(String[] args) {
         ConfigurableApplicationContext context =
@@ -77,12 +82,6 @@ public class WebApplication {
                 addressDTO.setTown("Desert town");
                 addressDTO.setStreet("Tumbleweed str");
                 addressDTO.setHouse("1b");
-                
-//                Map<Long, String> residents = new HashMap<>();
-//                residents.put(1L, "Luke Skywalker");
-//                residents.put(2L, "C3PO");
-//                addressDTO.setResidents(residents);
-
                 addressService.create(addressDTO);
 
                 // creating second address
@@ -99,11 +98,19 @@ public class WebApplication {
                 userDTO.setFirstName("Luke");
                 userDTO.setLastName("Skywalker");
 //                userDTO.setAddress("What this for?");
-
                 userDTO.setAddressId(1L);
-               
                 userService.create(userDTO);
 
+                addressDTO = addressService.read(1L);
+                logger.info("addressDTO Country " + addressDTO.getCountry());
+                
+                Map<Long, String> residents = new HashMap<>();
+                residents.put(1L, "Luke Skywalker");
+//                residents.put(2L, "C3PO");
+                addressDTO.setResidents(residents);
+                addressService.update(addressDTO);
+                
+                
                 // XXX Way to see how JSON will look
 //                String serializedImage = new ObjectMapper().writeValueAsString(dtObject);
 //                System.out.println("serialized image" + serializedImage);

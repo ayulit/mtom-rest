@@ -19,6 +19,7 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import ru.mera.samples.application.mappings.AddressToEntityMap;
 import ru.mera.samples.application.mappings.ImageToDTOMap;
 import ru.mera.samples.application.mappings.ImageToEntityMap;
 import ru.mera.samples.application.mappings.UserToEntityMap;
@@ -80,6 +81,7 @@ public class JPAConfig {
 
   @Bean
 //  @Lazy
+//  @DependsOn("userRepository")
   public ModelMapper modelMapper() throws IOException {
     ModelMapper modelMapper = new ModelMapper();
     
@@ -87,6 +89,8 @@ public class JPAConfig {
     modelMapper.addMappings(new ImageToDTOMap());
 
     modelMapper.addMappings(new UserToEntityMap());
+    
+    modelMapper.addMappings(new AddressToEntityMap());
     
     return modelMapper;
   }
