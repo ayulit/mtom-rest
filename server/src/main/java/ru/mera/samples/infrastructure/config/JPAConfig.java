@@ -80,8 +80,7 @@ public class JPAConfig {
   }*/
 
   @Bean
-//  @Lazy
-//  @DependsOn("userRepository")
+//  @Lazy // TODO i think its useless
   public ModelMapper modelMapper() throws IOException {
     ModelMapper modelMapper = new ModelMapper();
     
@@ -90,9 +89,14 @@ public class JPAConfig {
 
     modelMapper.addMappings(new UserToEntityMap());
     
-    modelMapper.addMappings(new AddressToEntityMap());
+    modelMapper.addMappings(getAddressToEntityMap());
     
     return modelMapper;
+  }
+  
+  @Bean
+  public AddressToEntityMap getAddressToEntityMap() {
+      return new AddressToEntityMap();
   }
 
   private Properties getJPAProperties() {
