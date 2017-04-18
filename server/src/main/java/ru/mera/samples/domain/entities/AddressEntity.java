@@ -2,6 +2,7 @@ package ru.mera.samples.domain.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
@@ -14,7 +15,7 @@ import java.util.List;
 public class AddressEntity extends AbstractEntity {
 
 //  @Column // not needed here
-  @OneToMany
+  @OneToMany(fetch = FetchType.EAGER) // EAGER, because collections are lazy-loaded by default!
   List<UserEntity> residents;
 
   @Column

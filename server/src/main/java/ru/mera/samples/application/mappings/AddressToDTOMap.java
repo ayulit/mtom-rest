@@ -1,25 +1,54 @@
 package ru.mera.samples.application.mappings;
 
 
+import org.modelmapper.AbstractConverter;
+import org.modelmapper.Converter;
 import org.modelmapper.PropertyMap;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import ru.mera.samples.application.dto.AddressDTO;
 import ru.mera.samples.domain.entities.AddressEntity;
+import ru.mera.samples.domain.entities.UserEntity;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class AddressToDTOMap extends PropertyMap<AddressEntity, AddressDTO> {
 
-  public static final String LITTERAL = ", ";
+    private static final Logger logger = LoggerFactory.getLogger(AddressToDTOMap.class);
 
-  protected void configure() {
-    Map<Long, String> residents       = new HashMap<>();
-    StringBuilder     fullNameBuilder = new StringBuilder();
-    source.getResidents().forEach(userEntity -> {
-      fullNameBuilder.append(userEntity.getLastName()).append(",").append(userEntity.getFirstName());
-      residents.put(userEntity.getId(), fullNameBuilder.toString());
-    });
-    map().setResidents(residents);
-  }
+    public static final String LITTERAL = ", ";
+
+    Converter<AddressEntity, Map<Long, String>> converter = new AbstractConverter<AddressEntity, Map<Long, String>>() {
+
+        @Override
+        protected Map<Long, String> convert(AddressEntity source) {
+
+            Map<Long, String> residents       = new HashMap<>();
+            StringBuilder     fullNameBuilder = new StringBuilder();
+
+            if (source == null) {
+                return null;
+            } else if (source.getResidents() == null) {
+                return null;                    
+            } else {
+                
+                // Lambda here
+                source.getResidents().forEach(userEntity -> {
+                    fullNameBuilder.append(userEntity.getLastName()).append(LITTERAL).append(userEntity.getFirstName());
+                    residents.put(userEntity.getId(), fullNameBuilder.toString());
+                });
+                
+                return residents;
+            }
+        }
+    };
+
+    protected void configure() {
+        using(converter).map(source, destination.getResidents());
+    }
 }
 

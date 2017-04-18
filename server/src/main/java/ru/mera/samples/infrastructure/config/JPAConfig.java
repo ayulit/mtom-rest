@@ -19,6 +19,7 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import ru.mera.samples.application.mappings.AddressToDTOMap;
 import ru.mera.samples.application.mappings.AddressToEntityMap;
 import ru.mera.samples.application.mappings.ImageToDTOMap;
 import ru.mera.samples.application.mappings.ImageToEntityMap;
@@ -90,6 +91,7 @@ public class JPAConfig {
     modelMapper.addMappings(new UserToEntityMap());
     
     modelMapper.addMappings(getAddressToEntityMap());
+    modelMapper.addMappings(new AddressToDTOMap());
     
     return modelMapper;
   }
