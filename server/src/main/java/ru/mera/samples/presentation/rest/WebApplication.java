@@ -101,14 +101,12 @@ public class WebApplication {
                 userDTO.setAddressId(1L);
                 userService.create(userDTO);
 
-                addressDTO = addressService.read(1L);
-                logger.info("addressDTO Country " + addressDTO.getCountry());
-                
+/*                addressDTO = addressService.read(1L);
                 Map<Long, String> residents = new HashMap<>();
                 residents.put(1L, "Luke Skywalker");
 //                residents.put(2L, "C3PO");
                 addressDTO.setResidents(residents);
-                addressService.update(addressDTO);
+                addressService.update(addressDTO);*/
                 
                 
                 // XXX Way to see how JSON will look

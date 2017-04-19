@@ -88,7 +88,7 @@ public class JPAConfig {
     modelMapper.addMappings(new ImageToEntityMap());
     modelMapper.addMappings(new ImageToDTOMap());
 
-    modelMapper.addMappings(new UserToEntityMap());
+    modelMapper.addMappings(getUserToEntityMap());
     
     modelMapper.addMappings(getAddressToEntityMap());
     modelMapper.addMappings(new AddressToDTOMap());
@@ -101,6 +101,11 @@ public class JPAConfig {
       return new AddressToEntityMap();
   }
 
+  @Bean
+  public UserToEntityMap getUserToEntityMap() {
+      return new UserToEntityMap();
+  }  
+  
   private Properties getJPAProperties() {
     final Properties properties = new Properties();
     
