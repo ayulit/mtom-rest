@@ -108,6 +108,13 @@ public class WebApplication {
                 userDTO.setAddressId(1L);
                 userService.create(userDTO);
                 
+                // creating 3d user
+                userDTO.setLogin("sherl");
+                userDTO.setFirstName("Sherlock");
+                userDTO.setLastName("Holmes");
+                userDTO.setAddressId(2L);
+                userService.create(userDTO);
+                
                 
 /*                addressDTO = addressService.read(1L);
                 Map<Long, String> residents = new HashMap<>();

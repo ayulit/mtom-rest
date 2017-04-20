@@ -51,5 +51,12 @@ public class UsersResource {
         // FIXME will return old address string
         return userDTO;
     }
+    
+    @RequestMapping(value = "/{userId}", method = RequestMethod.DELETE)
+    public void deleteUser(@PathVariable("userId") long id) {
+            
+        // TODO implement try-catch with RecordNotFoundException
+        userService.delete(id);
+    }
 
 }
