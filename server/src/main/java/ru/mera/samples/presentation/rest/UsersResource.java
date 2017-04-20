@@ -1,5 +1,7 @@
 package ru.mera.samples.presentation.rest;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,6 +23,11 @@ public class UsersResource {
     
     public UsersResource() {
         // Is it necessary? See Spring-REST-Book.
+    }
+    
+    @RequestMapping(method = RequestMethod.GET)
+    public List<UserDTO> getAllUsers() {
+        return userService.readAll();
     }
     
     @RequestMapping(value="/{userId}", method = RequestMethod.GET)
