@@ -28,7 +28,7 @@ public class AddressToDTOMap extends PropertyMap<AddressEntity, AddressDTO> {
         protected Map<Long, String> convert(AddressEntity source) {
 
             Map<Long, String> residents       = new HashMap<>();
-            StringBuilder     fullNameBuilder = new StringBuilder();
+            
 
             if (source == null) {
                 return null;
@@ -38,6 +38,7 @@ public class AddressToDTOMap extends PropertyMap<AddressEntity, AddressDTO> {
                 
                 // Lambda here
                 source.getResidents().forEach(userEntity -> {
+                    StringBuilder     fullNameBuilder = new StringBuilder();
                     fullNameBuilder.append(userEntity.getLastName()).append(LITTERAL).append(userEntity.getFirstName());
                     residents.put(userEntity.getId(), fullNameBuilder.toString());
                 });
