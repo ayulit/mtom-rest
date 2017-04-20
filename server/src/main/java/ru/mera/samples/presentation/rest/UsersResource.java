@@ -2,6 +2,8 @@ package ru.mera.samples.presentation.rest;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -9,14 +11,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import ru.mera.samples.application.dto.AddressDTO;
 import ru.mera.samples.application.dto.UserDTO;
-import ru.mera.samples.application.service.AddressService;
 import ru.mera.samples.application.service.UserService;
 
 @RestController
 @RequestMapping("/users")
 public class UsersResource {
+    
+    private static final Logger logger = LoggerFactory.getLogger(UsersResource.class);
     
     @Autowired
     private UserService userService;
@@ -33,6 +35,12 @@ public class UsersResource {
     @RequestMapping(value="/{userId}", method = RequestMethod.GET)
     public UserDTO getUser(@PathVariable("userId") long id) {        
         UserDTO userDTO = userService.read(id);        
+        return userDTO;
+    }
+
+    @RequestMapping(value="/names/{name}", method = RequestMethod.GET)
+    public UserDTO getUser(@PathVariable("name") String name) {        
+        UserDTO userDTO = userService.load(name);        
         return userDTO;
     }
     

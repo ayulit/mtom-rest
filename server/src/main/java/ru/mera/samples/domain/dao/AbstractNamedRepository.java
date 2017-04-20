@@ -2,7 +2,6 @@ package ru.mera.samples.domain.dao;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import ru.mera.samples.domain.entities.AbstractNamedEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,7 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.ParameterExpression;
+import javax.persistence.criteria.Root;
 
 
 @Repository
@@ -23,14 +22,14 @@ public abstract class AbstractNamedRepository<T extends AbstractNamedEntity> ext
   @PersistenceContext
   protected EntityManager entityManager;
 
-
   @Override
   public T findByName(String name) {
-    CriteriaBuilder  criteriaBuilder = entityManager.getCriteriaBuilder();
-    CriteriaQuery<T> criteriaQuery = getCriteriaQuery();
-    ParameterExpression<String> pname = criteriaBuilder.parameter(String.class, name);
-    criteriaQuery.where(criteriaBuilder.equal(pname, name));
-    return entityManager.createQuery(criteriaQuery).getSingleResult();
+      CriteriaBuilder             cb              = entityManager.getCriteriaBuilder();
+      CriteriaQuery<T>            cq              = cb.createQuery(persistentClass);
+      Root<T>                     rootEntry       = cq.from(persistentClass);
+      // "name" - column, name - variable
+      cq.select(rootEntry).where(cb.equal(rootEntry.get("name"), name));
+      return entityManager.createQuery(cq).getSingleResult();
   }
 
   @Override
