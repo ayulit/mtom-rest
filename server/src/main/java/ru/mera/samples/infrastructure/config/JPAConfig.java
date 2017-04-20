@@ -23,6 +23,7 @@ import ru.mera.samples.application.mappings.AddressToDTOMap;
 import ru.mera.samples.application.mappings.AddressToEntityMap;
 import ru.mera.samples.application.mappings.ImageToDTOMap;
 import ru.mera.samples.application.mappings.ImageToEntityMap;
+import ru.mera.samples.application.mappings.UserToDTOMap;
 import ru.mera.samples.application.mappings.UserToEntityMap;
 import ru.mera.samples.application.service.EmbeddedServiceBean;
 import ru.mera.samples.application.service.ImageServiceImpl;
@@ -89,6 +90,7 @@ public class JPAConfig {
     modelMapper.addMappings(new ImageToDTOMap());
 
     modelMapper.addMappings(getUserToEntityMap());
+    modelMapper.addMappings(new UserToDTOMap());
     
     modelMapper.addMappings(getAddressToEntityMap());
     modelMapper.addMappings(new AddressToDTOMap());
