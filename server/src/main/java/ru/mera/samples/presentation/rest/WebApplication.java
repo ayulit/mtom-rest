@@ -115,15 +115,6 @@ public class WebApplication {
                 userDTO.setAddressId(2L);
                 userService.create(userDTO);
                 
-                
-/*                addressDTO = addressService.read(1L);
-                Map<Long, String> residents = new HashMap<>();
-                residents.put(1L, "Luke Skywalker");
-//                residents.put(2L, "C3PO");
-                addressDTO.setResidents(residents);
-                addressService.update(addressDTO);*/
-                
-                
                 // XXX Way to see how JSON will look
 //                String serializedImage = new ObjectMapper().writeValueAsString(dtObject);
 //                System.out.println("serialized image" + serializedImage);
