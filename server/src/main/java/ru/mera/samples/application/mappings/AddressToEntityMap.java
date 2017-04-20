@@ -42,6 +42,7 @@ public class AddressToEntityMap extends PropertyMap<AddressDTO, AddressEntity> {
                 return null;                    
             } else {
 
+                // FIXME Won't it be automatic without it?
                 // Lambda here
                 source.getResidents().forEach((id, fullName) -> {
                     UserEntity userEntity = userRepository.findById(1L);
