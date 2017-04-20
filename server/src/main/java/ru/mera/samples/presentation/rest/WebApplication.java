@@ -101,6 +101,14 @@ public class WebApplication {
                 userDTO.setAddressId(1L);
                 userService.create(userDTO);
 
+                // creating 2nd user
+                userDTO.setLogin("obiwan");
+                userDTO.setFirstName("Obi-Wan");
+                userDTO.setLastName("Kenobi");
+                userDTO.setAddressId(1L);
+                userService.create(userDTO);
+                
+                
 /*                addressDTO = addressService.read(1L);
                 Map<Long, String> residents = new HashMap<>();
                 residents.put(1L, "Luke Skywalker");

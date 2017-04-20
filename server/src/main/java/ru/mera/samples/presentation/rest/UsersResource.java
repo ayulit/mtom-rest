@@ -34,5 +34,22 @@ public class UsersResource {
         userService.create(user);
         return user;
     }
+    
+    @RequestMapping(value = "/{userId}", method = RequestMethod.PUT)
+    public UserDTO updateUser(@PathVariable("userId") long id, @RequestBody UserDTO updatedUser) {
+
+        // TODO implement try-catch with RecordNotFoundException
+        UserDTO userDTO = userService.read(id);
+        
+        userDTO.setLogin(updatedUser.getLogin());
+        userDTO.setFirstName(updatedUser.getFirstName());
+        userDTO.setLastName(updatedUser.getLastName());
+        userDTO.setAddressId(updatedUser.getAddressId());
+        
+        userService.update(userDTO);
+
+        // FIXME will return old address string
+        return userDTO;
+    }
 
 }
