@@ -18,7 +18,6 @@ package ru.mera.samples.application.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.mera.samples.application.dto.AddressDTO;
 import ru.mera.samples.domain.dao.AddressRepository;
@@ -36,6 +35,18 @@ public class AddressServiceImpl extends AbstractServiceImpl<AddressDTO,AddressEn
   @Override
   protected AddressRepository getRepository() {
     return addressRepository;
+  }
+  
+  @Override
+  public void delete(Long id) {
+      logger.info("Deleting address with id=" + id);
+      AddressEntity addressEntity = addressRepository.findById(id);
+      
+      // Lambda here
+      addressEntity.getResidents().forEach(userEntity -> userEntity.setAddress(null));      
+      addressEntity.getResidents().clear();
+
+      addressRepository.delete(addressEntity);
   }
 
 }
