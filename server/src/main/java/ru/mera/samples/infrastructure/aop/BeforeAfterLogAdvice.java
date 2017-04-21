@@ -36,27 +36,31 @@ import java.util.Optional;
 public class BeforeAfterLogAdvice {
 
   private static final Logger logger = LoggerFactory.getLogger(BeforeAfterLogAdvice.class);
-
-  @Pointcut( "within(org.springframework.ws.samples.mtom.service.*)" )
-  public void inImageRepositoryEndpoint() {
-  }
+  
+  @Pointcut("execution(* ru.mera.samples.presentation.rest.UsersResource.logoutUser(..))")
+  public void whatIDontWantToMatch(){}
+  @Pointcut("within(ru.mera.samples.presentation.rest.*)")
+  public void whatIWantToMatch(){}
+  @Pointcut("whatIWantToMatch() && ! whatIDontWantToMatch()")
+  public void allIWantToMatch(){}
+  
   // TODO Enable after security implementation
-  @Before( "inImageRepositoryEndpoint()" )
+  @Before( "allIWantToMatch()" )
   public void before(JoinPoint joinPoint) {
     final String[] principals = new String[1];
     Optional.of(SecurityContextHolder.getContext()).ifPresent(
         securityContext -> Optional.of(securityContext.getAuthentication()).ifPresent(
             authentication -> Optional.of(authentication.getPrincipal()).ifPresent(o -> principals[0] = o.toString())));
-    logger.info("Before method: " + joinPoint.getSignature().getName() + " by user " + principals);
+    logger.info("Before method: " + joinPoint.getSignature().getName() + " by user " + principals[0]);
   }
 
-  @AfterReturning( "inImageRepositoryEndpoint()" )
+  @AfterReturning( "allIWantToMatch()" )
   public void afterReturning(JoinPoint joinPoint) {
     final String[] principals = new String[1];
     Optional.of(SecurityContextHolder.getContext()).ifPresent(
         securityContext -> Optional.of(securityContext.getAuthentication()).ifPresent(
             authentication -> Optional.of(authentication.getPrincipal()).ifPresent(o -> principals[0] = o.toString())));
-    logger.info("After method: " + joinPoint.getSignature().getName() + " by user " + principals);
+    logger.info("After method: " + joinPoint.getSignature().getName() + " by user " + principals[0]);
   }
 
 
