@@ -7,6 +7,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,12 +55,14 @@ public class ImageResource {
         
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(method = RequestMethod.POST)
     public ImageDTO addImage(@RequestBody ImageDTO image) {
         imageService.create(image);
         return image;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(value = "/{imageId}", method = RequestMethod.PUT)
     public ImageDTO updateImage(@PathVariable("imageId") long id, @RequestBody ImageDTO updatedImage) {
 
@@ -74,6 +77,7 @@ public class ImageResource {
         return imageDTO;
     }
     
+    @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(value = "/{imageId}", method = RequestMethod.DELETE)
     public void deleteImage(@PathVariable("imageId") long id) {
             
