@@ -18,13 +18,12 @@ package ru.mera.samples.infrastructure.aop;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
-//import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.Optional;
 
@@ -42,7 +41,7 @@ public class BeforeAfterLogAdvice {
   public void inImageRepositoryEndpoint() {
   }
   // TODO Enable after security implementation
-/*  @Before( "inImageRepositoryEndpoint()" )
+  @Before( "inImageRepositoryEndpoint()" )
   public void before(JoinPoint joinPoint) {
     final String[] principals = new String[1];
     Optional.of(SecurityContextHolder.getContext()).ifPresent(
@@ -58,7 +57,7 @@ public class BeforeAfterLogAdvice {
         securityContext -> Optional.of(securityContext.getAuthentication()).ifPresent(
             authentication -> Optional.of(authentication.getPrincipal()).ifPresent(o -> principals[0] = o.toString())));
     logger.info("After method: " + joinPoint.getSignature().getName() + " by user " + principals);
-  }*/
+  }
 
 
 }
