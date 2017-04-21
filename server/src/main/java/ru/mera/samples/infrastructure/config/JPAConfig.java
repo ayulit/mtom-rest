@@ -54,7 +54,7 @@ public class JPAConfig {
   }
 
   @Bean
-//  @DependsOn( "embeddedServiceBean" ) // TODO use later with Embedded PostgreSQL
+  @DependsOn( "embeddedServiceBean" ) // TODO use later with Embedded PostgreSQL
   public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
     LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
     
@@ -74,12 +74,12 @@ public class JPAConfig {
   }
 
 //  TODO use later this Embedded PostgreSQL
-/*  @Bean
+  @Bean
   public EmbeddedServiceBean embeddedServiceBean() throws IOException {
     EmbeddedServiceBean embeddedServiceBean = new EmbeddedServiceBean();
-    embeddedServiceBean.setService(new PostgresEmbeddedService(getHost(), getPort(), getUsername(), getPassword(), getDbName()));
+    embeddedServiceBean.setService(new PostgresEmbeddedService(getHost(), Integer.parseInt(getPort()), getUsername(), getPassword(), getDbName()));
     return embeddedServiceBean;
-  }*/
+  }
 
   @Bean
 //  @Lazy // TODO i think its useless

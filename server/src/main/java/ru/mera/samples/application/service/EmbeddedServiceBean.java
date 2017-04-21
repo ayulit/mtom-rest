@@ -22,27 +22,27 @@ public class EmbeddedServiceBean implements BeanNameAware{
   @PostConstruct
   public void start() throws IOException {
    // TODO use later with Embedded PostgreSQL      
-/*    logger.info("EmbeddedService " + name + ": starting");
+    logger.info("EmbeddedService " + name + ": starting");
     try {
       service.start();
     } catch( Exception e ) {
-      logger.fatal("Exception is occured while starting embedded service " + name + ": " + e.getMessage());
+      logger.error("Exception is occured while starting embedded service " + name + ": " + e.getMessage());
       throw e;
     }
-    logger.info("EmbeddedService " + name + ": starting...OK");*/
+    logger.info("EmbeddedService " + name + ": starting...OK");
   }
 
   @PreDestroy
   public void stop() {
    // TODO use later with Embedded PostgreSQL      
-/*    logger.info("EmbeddedService " + name + ": stopping");
+    logger.info("EmbeddedService " + name + ": stopping");
     try {
       service.stop();
     } catch( Exception e ) {
-      logger.fatal("Exception is occured while stopping embedded service " + name + ": " + e.getMessage());
+      logger.error("Exception is occured while stopping embedded service " + name + ": " + e.getMessage());
       throw e;
     }
-    logger.info("EmbeddedService " + name + ": stopping...OK");*/
+    logger.info("EmbeddedService " + name + ": stopping...OK");
   }
 
   public void setService(EmbeddedService service) {
