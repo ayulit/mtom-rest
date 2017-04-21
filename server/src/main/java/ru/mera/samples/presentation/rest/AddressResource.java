@@ -15,7 +15,6 @@ import ru.mera.samples.application.service.AddressService;
 
 @RestController
 @RequestMapping("/addresses")
-@PreAuthorize("hasRole('ADMIN')")
 public class AddressResource {
     
     @Autowired
@@ -25,23 +24,27 @@ public class AddressResource {
         // Is it necessary? See Spring-REST-Book.
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @RequestMapping(method = RequestMethod.GET)
     public List<AddressDTO> getAllAddresses() {
         return addressService.readAll();
     }
     
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @RequestMapping(value="/{addressId}", method = RequestMethod.GET)
     public AddressDTO getAddress(@PathVariable("addressId") long id) {        
         AddressDTO addressDTO = addressService.read(id);        
         return addressDTO;
     }
     
+    @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(method = RequestMethod.POST)
     public AddressDTO addAddress(@RequestBody AddressDTO address) {
         addressService.create(address);
         return address;
     }
     
+    @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(value = "/{addressId}", method = RequestMethod.PUT)
     public AddressDTO updateAddress(@PathVariable("addressId") long id, @RequestBody AddressDTO updatedAddress) {
 
@@ -59,6 +62,7 @@ public class AddressResource {
         return addressDTO;
     }
     
+    @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(value = "/{addressId}", method = RequestMethod.DELETE)
     public void deleteAddress(@PathVariable("addressId") long id) {
             

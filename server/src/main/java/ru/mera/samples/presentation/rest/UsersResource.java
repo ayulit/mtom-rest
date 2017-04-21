@@ -34,31 +34,34 @@ public class UsersResource {
         // Is it necessary? See Spring-REST-Book.
     }
     
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN','USER')") 
     @RequestMapping(method = RequestMethod.GET)
     public List<UserDTO> getAllUsers() {
         return userService.readAll();
     }
     
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @RequestMapping(value="/{userId}", method = RequestMethod.GET)
     public UserDTO getUser(@PathVariable("userId") long id) {        
         UserDTO userDTO = userService.read(id);        
         return userDTO;
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','USER')") 
     @RequestMapping(value="/names/{name}", method = RequestMethod.GET)
     public UserDTO getUser(@PathVariable("name") String name) {        
         UserDTO userDTO = userService.load(name);        
         return userDTO;
     }
     
+    @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(method = RequestMethod.POST)
     public UserDTO addUser(@RequestBody UserDTO user) {
         userService.create(user);
         return user;
     }
     
+    @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(value = "/{userId}", method = RequestMethod.PUT)
     public UserDTO updateUser(@PathVariable("userId") long id, @RequestBody UserDTO updatedUser) {
 
@@ -76,6 +79,7 @@ public class UsersResource {
         return userDTO;
     }
     
+    @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(value = "/{userId}", method = RequestMethod.DELETE)
     public void deleteUser(@PathVariable("userId") long id) {
             
@@ -83,13 +87,14 @@ public class UsersResource {
         userService.delete(id);
     }
     
+    @PreAuthorize("hasAnyRole('ADMIN','USER')") 
     @RequestMapping(value="/logout", method = RequestMethod.GET)
     public String logoutUser (HttpServletRequest request, HttpServletResponse response) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null){    
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
-        return "redirect:/login?logout";//You can redirect wherever you want, but generally it's a good practice to show login screen again.
+        return "Logout successful.";//You can redirect wherever you want, but generally it's a good practice to show login screen again.
     }
 
 }
