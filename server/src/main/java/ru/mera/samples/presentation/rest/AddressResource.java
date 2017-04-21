@@ -3,6 +3,7 @@ package ru.mera.samples.presentation.rest;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +15,7 @@ import ru.mera.samples.application.service.AddressService;
 
 @RestController
 @RequestMapping("/addresses")
+@PreAuthorize("hasRole('ADMIN')")
 public class AddressResource {
     
     @Autowired
