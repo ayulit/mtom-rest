@@ -12,12 +12,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled=true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
-    public static enum Scheme {
-        BASIC
-    }
-
-    private final Scheme scheme = Scheme.BASIC;
     
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth)
@@ -25,23 +19,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.inMemoryAuthentication()
                 .withUser("rest").password("rocks").roles("USER")
                 .and()
-                .withUser("admin").password("admin").roles("ADMIN");
+                .withUser("admin").password("admin").roles("ADMIN","USER");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
         http
-        .csrf().disable()
+            .csrf().disable()
             .authorizeRequests()
                 .antMatchers(HttpMethod.GET,"/images/**").permitAll()
-                .anyRequest().authenticated();
+                .anyRequest().authenticated()
+                .and()
+            .httpBasic();
+                
+                
+        http
+            .formLogin()
+                .defaultSuccessUrl("/users/login?success=true", true)
+            .and()
+            .logout()
+                .permitAll();
 
-        switch (scheme) {
-            case BASIC:
-                http.httpBasic();
-                break;
-        }
     }    
     
 }

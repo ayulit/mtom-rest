@@ -24,13 +24,13 @@ public class AddressResource {
         // Is it necessary? See Spring-REST-Book.
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN','USER')")
+    @PreAuthorize("hasRole('USER')")
     @RequestMapping(method = RequestMethod.GET)
     public List<AddressDTO> getAllAddresses() {
         return addressService.readAll();
     }
     
-    @PreAuthorize("hasAnyRole('ADMIN','USER')")
+    @PreAuthorize("hasRole('USER')")
     @RequestMapping(value="/{addressId}", method = RequestMethod.GET)
     public AddressDTO getAddress(@PathVariable("addressId") long id) {        
         AddressDTO addressDTO = addressService.read(id);        

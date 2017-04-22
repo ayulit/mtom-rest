@@ -2,20 +2,15 @@ package ru.mera.samples.presentation.rest;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ru.mera.samples.application.dto.UserDTO;
@@ -25,6 +20,7 @@ import ru.mera.samples.application.service.UserService;
 @RequestMapping("/users")
 public class UsersResource {
     
+    @SuppressWarnings("unused")
     private static final Logger logger = LoggerFactory.getLogger(UsersResource.class);
     
     @Autowired
@@ -34,20 +30,20 @@ public class UsersResource {
         // Is it necessary? See Spring-REST-Book.
     }
     
-    @PreAuthorize("hasAnyRole('ADMIN','USER')") 
+    @PreAuthorize("hasRole('USER')")
     @RequestMapping(method = RequestMethod.GET)
     public List<UserDTO> getAllUsers() {
         return userService.readAll();
     }
     
-    @PreAuthorize("hasAnyRole('ADMIN','USER')")
+    @PreAuthorize("hasRole('USER')")
     @RequestMapping(value="/{userId}", method = RequestMethod.GET)
     public UserDTO getUser(@PathVariable("userId") long id) {        
         UserDTO userDTO = userService.read(id);        
         return userDTO;
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN','USER')") 
+    @PreAuthorize("hasRole('USER')")
     @RequestMapping(value="/names/{name}", method = RequestMethod.GET)
     public UserDTO getUser(@PathVariable("name") String name) {        
         UserDTO userDTO = userService.load(name);        
@@ -86,15 +82,14 @@ public class UsersResource {
         // TODO implement try-catch with RecordNotFoundException
         userService.delete(id);
     }
-    
-    @PreAuthorize("hasAnyRole('ADMIN','USER')") 
-    @RequestMapping(value="/logout", method = RequestMethod.GET)
-    public String logoutUser (HttpServletRequest request, HttpServletResponse response) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null){    
-            new SecurityContextLogoutHandler().logout(request, response, auth);
+
+    @PreAuthorize("hasRole('USER')") 
+    @RequestMapping(value="/login", method = RequestMethod.GET)
+    public String loginSuccess (@RequestParam("success") boolean isSuccess) {
+        if (isSuccess) {
+            return "Login successful.";
         }
-        return "Logout successful.";//You can redirect wherever you want, but generally it's a good practice to show login screen again.
+        return "Login error.";
     }
 
 }

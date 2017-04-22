@@ -45,7 +45,7 @@ public class BeforeAfterLogAdvice {
   public void allIWantToMatch(){}
   
   // TODO Enable after security implementation
-  @Before( "allIWantToMatch()" )
+  @Before( "whatIWantToMatch()" )
   public void before(JoinPoint joinPoint) {
     final String[] principals = new String[1];
     Optional.of(SecurityContextHolder.getContext()).ifPresent(
@@ -54,7 +54,7 @@ public class BeforeAfterLogAdvice {
     logger.info("Before method: " + joinPoint.getSignature().getName() + " by user " + principals[0]);
   }
 
-  @AfterReturning( "allIWantToMatch()" )
+  @AfterReturning( "whatIWantToMatch()" )
   public void afterReturning(JoinPoint joinPoint) {
     final String[] principals = new String[1];
     Optional.of(SecurityContextHolder.getContext()).ifPresent(
