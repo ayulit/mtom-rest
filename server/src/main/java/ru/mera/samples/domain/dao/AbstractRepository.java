@@ -58,7 +58,7 @@ public abstract class AbstractRepository<T extends AbstractEntity> implements En
 
   @Override
   public void delete(T entity) {
-    entityManager.remove(entity);
+    entityManager.remove(entityManager.contains(entity) ? entity : entityManager.merge(entity));
   }
 
   @Override
