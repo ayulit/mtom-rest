@@ -1,14 +1,54 @@
-# MTOM Sample
+# MTOM server with REST
 
-This sample shows how to use marshal and unmarshal MTOM attachments using JAXB2.
+Учебный проект - реализация RESTful приложения на Spring.
 
 ## Build and deploy
 
-See the main [README](../README.md) for build instructions.
+Сервер запускается Gradle таской tomcatRun и автоматически разворачивает Embedded PostgreSQL сервер для хранения данных. 
 
-## License
+Возможен запуск с помощью Spring Boot: для этого надо запускать как Java Application класс ru.mera.samples.presentation.rest.WebApplication, предварительно раскомментировав его содержимое и зависимости Spring Boot в build.gradle.
 
-[Spring Web Services] is released under version 2.0 of the [Apache License].
+## Features
 
-[Spring Web Services]: http://projects.spring.io/spring-ws
-[Apache License]: http://www.apache.org/licenses/LICENSE-2.0
+* реализованы REST сервисы CRUD
+  * для изображений
+  * для адресов
+  * для пользователей
+* интегрирована аутентификация и авторизация с помощью Spring Security
+  * HTTP Basic authentication для
+    * роль ADMIN, логин: admin пароль: admin
+    * роль USER,  логин: rest  пароль: rocks
+  * права ролей:
+    * ADMIN - может все
+    * USER - может только делать GET запросы
+    * ГОСТЬ - может только делать GET запросы на изображения без авторизации.
+
+## Testing
+
+При запуске приложения БД наполняется тестовыми данными при помощи бина  DbFillingBean: создаются 3 юзера, им назначаются 2 адреса, а также в БД загружается картинка.
+
+К сожалению, unit-тестов нет. Приложение тестировалось в ручном режиме с помощью браузера (Chrome, Safari) и rest-клиента Postman.
+
+Логин происходит отправкой POST запроса по адресу `http://localhost:8080/mtom/login` c параметрами в заголовке:
+* username
+* password
+
+Логаут происходит отправкой GET запроса по адресу `http://localhost:8080/mtom/logout`
+
+Возможные тестовые сценарии:
+
+* проверка прав гостя
+  * получение картинки из БД без авторизации - SUCCESS
+  * получения списка адресов - FAIL
+* проверка прав USER
+  * получения списка адресов - SUCCESS 
+  * постинг картинки - FAIL 
+* проверка прав ADMIN
+  * постинг картинки - SUCCESS 
+* проверка UPDATE
+* проверка DELETE адреса, назначенного юзеру
+  * при этом юзер остается без адреса
+
+
+Для удобства тестирования изображений в папке src/test/resources/base64images находятся три файла с данными в кодировке Base64, которые соответствуют трем небольшим картинкам. Так же при GET запросе картинка сохраняется на жесткий диск.
+
