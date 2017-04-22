@@ -27,6 +27,7 @@ import ru.mera.samples.application.mappings.UserToDTOMap;
 import ru.mera.samples.application.mappings.UserToEntityMap;
 import ru.mera.samples.application.service.EmbeddedServiceBean;
 import ru.mera.samples.application.service.ImageServiceImpl;
+import ru.mera.samples.infrastructure.services.DbFillingBean;
 import ru.yandex.qatools.embed.service.PostgresEmbeddedService;
 
 import java.io.IOException;
@@ -107,6 +108,13 @@ public class JPAConfig {
   public UserToEntityMap getUserToEntityMap() {
       return new UserToEntityMap();
   }  
+ 
+  @Bean
+  @DependsOn( "transactionManager" )
+  public DbFillingBean fillDB() {
+      return new DbFillingBean();
+  }
+  
   
   private Properties getJPAProperties() {
     final Properties properties = new Properties();
