@@ -31,10 +31,8 @@ public class AddressToEntityMap extends PropertyMap<AddressDTO, AddressEntity> {
         @Override
         protected List<UserEntity> convert(AddressDTO source) {
 
-            // at this step 'USER' table must exist and be filled!
             
             List<UserEntity> residents       = new ArrayList<>();
-//            StringBuilder    fullNameBuilder = new StringBuilder();
 
             if (source == null) {
                 return null;
@@ -42,8 +40,6 @@ public class AddressToEntityMap extends PropertyMap<AddressDTO, AddressEntity> {
                 return null;                    
             } else {
 
-                // FIXME Won't it be automatic without it?
-                // Lambda here
                 source.getResidents().forEach((id, fullName) -> {
                     UserEntity userEntity = userRepository.findById(1L);
                     residents.add(userEntity);

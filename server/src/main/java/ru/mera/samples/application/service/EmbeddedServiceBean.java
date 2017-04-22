@@ -21,7 +21,6 @@ public class EmbeddedServiceBean implements BeanNameAware{
 
   @PostConstruct
   public void start() throws IOException {
-   // TODO use later with Embedded PostgreSQL      
     logger.info("EmbeddedService " + name + ": starting");
     try {
       service.start();
@@ -34,7 +33,6 @@ public class EmbeddedServiceBean implements BeanNameAware{
 
   @PreDestroy
   public void stop() {
-   // TODO use later with Embedded PostgreSQL      
     logger.info("EmbeddedService " + name + ": stopping");
     try {
       service.stop();

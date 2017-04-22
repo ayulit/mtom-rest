@@ -14,8 +14,7 @@ import java.util.List;
 @Inheritance( strategy = InheritanceType.JOINED )
 public class AddressEntity extends AbstractEntity {
 
-//  @Column // not needed here
-  @OneToMany(fetch = FetchType.EAGER, mappedBy="address") // EAGER, because collections are lazy-loaded by default!
+  @OneToMany(fetch = FetchType.EAGER, mappedBy="address")
   List<UserEntity> residents;
 
   @Column

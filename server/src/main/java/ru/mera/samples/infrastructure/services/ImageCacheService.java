@@ -1,10 +1,8 @@
 package ru.mera.samples.infrastructure.services;
 
 
-import ru.mera.samples.domain.entities.ImageEntity;
-
-import java.awt.image.BufferedImage;
 import java.util.Optional;
+import ru.mera.samples.domain.entities.ImageEntity;
 
 public interface ImageCacheService {
 

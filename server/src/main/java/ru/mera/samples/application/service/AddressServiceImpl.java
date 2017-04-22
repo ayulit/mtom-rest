@@ -32,7 +32,6 @@ public class AddressServiceImpl extends AbstractServiceImpl<AddressDTO,AddressEn
   @Autowired
   private AddressRepository addressRepository;
 
-  // XXX Why protected not public ?!
   @Autowired
   private UserRepository userRepository;
   
@@ -46,7 +45,6 @@ public class AddressServiceImpl extends AbstractServiceImpl<AddressDTO,AddressEn
       logger.info("Deleting address with id=" + id);
       AddressEntity addressEntity = addressRepository.findById(id);
       
-      // Lambda here
       addressEntity.getResidents().forEach(userEntity -> {
           userEntity.setAddress(null);
           userRepository.update(userEntity);

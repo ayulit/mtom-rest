@@ -17,7 +17,6 @@ import ru.mera.samples.infrastructure.config.MtomServerConfiguration;
 @PropertySource("classpath:conf/h2-test.properties")
 
 @Import( {JPAConfig.class} )
-//@Import( {MtomServerConfiguration.class} )
 public class MtomServerTestConfiguration  {
     
     private static final Logger logger = Logger.getLogger(MtomServerTestConfiguration.class);

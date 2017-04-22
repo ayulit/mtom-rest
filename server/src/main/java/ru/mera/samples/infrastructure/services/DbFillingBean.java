@@ -79,22 +79,17 @@ public class DbFillingBean {
         
         String fileName = "fry.png";
         
-        // Way of loading classpath resources
         Resource resource = new ClassPathResource(fileName);
 
         try {
 
             File file = resource.getFile();
-            
-            // The line that reads the image file. Throws IOException.
             BufferedImage image = ImageIO.read(file);
 
             ImageDTO imageDTO = new ImageDTO();
-
             imageDTO.setName(fileName);
             imageDTO.setImage(image);
 
-            // Persisting image to DB here ...
             imageService.create(imageDTO);
             
         } catch (IOException e) {

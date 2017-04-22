@@ -19,7 +19,6 @@ public class UserEntity extends AbstractNamedEntity {
   @Column
   private String lastName;
 
-//  @Column // not needed here
   @ManyToOne
   @JoinColumn(name = "address_id")
   private AddressEntity address;

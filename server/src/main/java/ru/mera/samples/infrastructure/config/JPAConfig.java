@@ -1,18 +1,19 @@
 package ru.mera.samples.infrastructure.config;
 
-import org.apache.commons.dbcp2.BasicDataSource;
+import java.io.IOException;
+import java.util.Properties;
 
+import javax.sql.DataSource;
+
+import org.apache.commons.dbcp2.BasicDataSource;
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.core.env.Environment;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -26,14 +27,8 @@ import ru.mera.samples.application.mappings.ImageToEntityMap;
 import ru.mera.samples.application.mappings.UserToDTOMap;
 import ru.mera.samples.application.mappings.UserToEntityMap;
 import ru.mera.samples.application.service.EmbeddedServiceBean;
-import ru.mera.samples.application.service.ImageServiceImpl;
 import ru.mera.samples.infrastructure.services.DbFillingBean;
 import ru.yandex.qatools.embed.service.PostgresEmbeddedService;
-
-import java.io.IOException;
-import java.util.Properties;
-
-import javax.sql.DataSource;
 
 @Configuration
 @EnableTransactionManagement
@@ -55,16 +50,13 @@ public class JPAConfig {
   }
 
   @Bean
-  @DependsOn( "embeddedServiceBean" ) // TODO use later with Embedded PostgreSQL
+  @DependsOn( "embeddedServiceBean" )
   public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
     LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
     
     factoryBean.setDataSource(dataSource());
-    
-    // Actually not used...
     factoryBean.setPersistenceUnitName("PersistenceUnit");
     
-    // JPA features...?
     JpaVendorAdapter hibernateVendorAdapter = new HibernateJpaVendorAdapter();
     factoryBean.setJpaVendorAdapter(hibernateVendorAdapter);
     
@@ -74,7 +66,6 @@ public class JPAConfig {
     return factoryBean;
   }
 
-//  TODO use later this Embedded PostgreSQL
   @Bean
   public EmbeddedServiceBean embeddedServiceBean() throws IOException {
     EmbeddedServiceBean embeddedServiceBean = new EmbeddedServiceBean();
@@ -83,7 +74,6 @@ public class JPAConfig {
   }
 
   @Bean
-//  @Lazy // TODO i think its useless
   public ModelMapper modelMapper() throws IOException {
     ModelMapper modelMapper = new ModelMapper();
     
@@ -121,15 +111,8 @@ public class JPAConfig {
     
     properties.setProperty("hibernate.dialect", environment.getRequiredProperty("hibernate.dialect"));
     properties.setProperty("hibernate.show_sql", "true");
-    properties.setProperty("hibernate.temp.use_jdbc_metadata_defaults", "false"); // from REST book    
-
-    // xlitand: 
-	// Drop and re-create the database schema on startup,
-	// -create: every time
-	// -update: if ONLY model changed!
+    properties.setProperty("hibernate.temp.use_jdbc_metadata_defaults", "false");
     properties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
-    
-    // from Yura: cool feature! Really makes SQL queries nice :)
     properties.setProperty("hibernate.format_sql", "true");
     
     return properties;
@@ -137,13 +120,11 @@ public class JPAConfig {
   
   
   private DataSource dataSource() {
-      // DriverManagerDataSource is also acceptable.
       BasicDataSource  ds = new BasicDataSource ();
       
       ds.setUrl(environment.getRequiredProperty("jdbc.url"));     
       ds.setUsername(getUsername());
       ds.setPassword(getPassword());
-//      ds.setMaxTotal(Integer.valueOf(environment.getRequiredProperty("jdbc.maxConnections"))); // from REST book
       ds.setDriverClassName(environment.getRequiredProperty("jdbc.driver"));
 
       return ds;

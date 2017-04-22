@@ -39,7 +39,6 @@ public class ImageToEntityMap extends PropertyMap<ImageDTO, ImageEntity> {
                     ImageIO.write(source.getImage(), 
                                   StringUtils.getFilenameExtension(source.getName()), bos);
                 } catch (IOException e) {
-                    // FIXME perhaps will not be working here
                     logger.error("Exception occured while transforming image to bytes");
                 }
                 

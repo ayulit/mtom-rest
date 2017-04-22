@@ -27,7 +27,6 @@ public class UsersResource {
     private UserService userService;
     
     public UsersResource() {
-        // Is it necessary? See Spring-REST-Book.
     }
     
     @PreAuthorize("hasRole('USER')")
@@ -61,7 +60,6 @@ public class UsersResource {
     @RequestMapping(value = "/{userId}", method = RequestMethod.PUT)
     public UserDTO updateUser(@PathVariable("userId") long id, @RequestBody UserDTO updatedUser) {
 
-        // TODO implement try-catch with RecordNotFoundException
         UserDTO userDTO = userService.read(id);
         
         userDTO.setLogin(updatedUser.getLogin());
@@ -71,15 +69,12 @@ public class UsersResource {
         
         userService.update(userDTO);
 
-        // FIXME will return old address string
         return userDTO;
     }
     
     @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(value = "/{userId}", method = RequestMethod.DELETE)
     public void deleteUser(@PathVariable("userId") long id) {
-            
-        // TODO implement try-catch with RecordNotFoundException
         userService.delete(id);
     }
 

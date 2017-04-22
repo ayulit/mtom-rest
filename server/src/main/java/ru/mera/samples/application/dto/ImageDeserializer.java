@@ -23,7 +23,6 @@ public class ImageDeserializer extends JsonDeserializer<BufferedImage> {
         BufferedImage resultImage = null;
         
         try {
-            // convert byte array back to BufferedImage
             InputStream in = new ByteArrayInputStream(imageInByte);
             resultImage = ImageIO.read(in);
         } catch (IOException e) {

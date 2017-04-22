@@ -21,7 +21,6 @@ public class AddressResource {
     private AddressService addressService;
     
     public AddressResource() {
-        // Is it necessary? See Spring-REST-Book.
     }
 
     @PreAuthorize("hasRole('USER')")
@@ -48,7 +47,6 @@ public class AddressResource {
     @RequestMapping(value = "/{addressId}", method = RequestMethod.PUT)
     public AddressDTO updateAddress(@PathVariable("addressId") long id, @RequestBody AddressDTO updatedAddress) {
 
-        // TODO implement try-catch with RecordNotFoundException
         AddressDTO addressDTO = addressService.read(id);
         
         addressDTO.setCountry(updatedAddress.getCountry());
@@ -65,8 +63,6 @@ public class AddressResource {
     @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(value = "/{addressId}", method = RequestMethod.DELETE)
     public void deleteAddress(@PathVariable("addressId") long id) {
-            
-        // TODO implement try-catch with RecordNotFoundException
         addressService.delete(id);
     }
 

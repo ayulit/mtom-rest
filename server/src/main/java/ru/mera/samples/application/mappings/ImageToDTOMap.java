@@ -34,7 +34,6 @@ public class ImageToDTOMap extends PropertyMap<ImageEntity, ImageDTO> {
                 try {
                     resultImage = ImageIO.read(in);
                 } catch (IOException e) {
-                    // FIXME perhaps will not be working here
                     logger.error("Exception occured while transforming image from bytes");
                 }
                 

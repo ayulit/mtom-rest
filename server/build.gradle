@@ -72,26 +72,19 @@ dependencies {
     /********** Spring Security *********/
 	compile("org.springframework.security:spring-security-web:$springSecurityVersion")
 	compile("org.springframework.security:spring-security-config:$springSecurityVersion")
-    
-    // xlitand: needed for security w/o Spring Boot, compileOnly here is like scope:provided in Maven
     compileOnly("javax.servlet:javax.servlet-api:3.1.0")
 
     
-	// xlitand: using spring aop
 	compile("org.springframework:spring-aop:$springVersion")
 	
-	// xlitand: using aspectj
 	compile("org.aspectj:aspectjrt:1.8.10")
 	compile("org.aspectj:aspectjweaver:1.8.10")
 	compile("org.springframework:spring-aspects:$springVersion")
 	
-	// xlitand: PostgreSQL Drivers
 	compile("org.postgresql:postgresql:$postgresqlVersion")
 	
-	// xlitand: JDBC interaction with database
 	compile("org.springframework:spring-jdbc:$springVersion")
 	
-	// xlitand: EmbeddedPostgreSQL by Yandex
 	compile("ru.yandex.qatools.embed:embedded-services:1.21")
 	compile("commons-dbcp:commons-dbcp:1.2.2")
 
@@ -103,38 +96,27 @@ dependencies {
 	compile("io.springfox:springfox-swagger2:2.6.1")
 	compile("io.springfox:springfox-swagger-ui:2.6.1")
 
-	// xlitand: Hibernate: to start need only this
 	compile("org.hibernate:hibernate-core:$hibernateVersion")
 	
-	// xlitand: needed for some reason
 	compile("org.hibernate:hibernate-entitymanager:$hibernateVersion")
 	
-	// xlitand: JPA issues in Spring
 	compile("org.springframework:spring-orm:$springVersion")
 	
     compile("com.fasterxml.jackson.core:jackson-databind:2.7.7")
 
 	/********** Spring Boot *********/
 //	compile("org.springframework.boot:spring-boot-starter-web:1.2.3.RELEASE") {
-		// dealing with some 'slf4j' mishaps
 //		exclude module : 'spring-boot-starter-logging'
 //	}
 	    
     /********** Logging *********/  
 	compile("org.slf4j:slf4j-api:1.7.7")
     compile("ch.qos.logback:logback-classic:1.1.2")
-
-//  compile("org.slf4j:slf4j-log4j12:1.7.12") // commented by Yura	
-//  runtime("wsdl4j:wsdl4j:1.6.1")            // xlitand: what's this ?!...
-
        
-    // xlitand: H2 Database 
     compile("com.h2database:h2:1.4.181")
 
-    // xlitand:  For using BasicDataSource in JPAConfig
     compile("org.apache.commons:commons-dbcp2:2.1")
     
-    // xlitand:  needed for correct dataSource work
     compile group: 'commons-pool', name: 'commons-pool', version: '1.6'
     
     // Test Dependencies

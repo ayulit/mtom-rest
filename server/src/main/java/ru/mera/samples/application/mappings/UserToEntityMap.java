@@ -1,15 +1,11 @@
 package ru.mera.samples.application.mappings;
 
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.modelmapper.AbstractConverter;
 import org.modelmapper.Converter;
 import org.modelmapper.PropertyMap;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import ru.mera.samples.application.dto.AddressDTO;
 import ru.mera.samples.application.dto.UserDTO;
 import ru.mera.samples.domain.dao.AddressRepository;
 import ru.mera.samples.domain.entities.AddressEntity;
@@ -47,7 +43,6 @@ public class UserToEntityMap extends PropertyMap<UserDTO, UserEntity> {
       String login = source.getLogin();      
       map().setName(login);
 
-      // FIXME possibly we need to do all in one mapping
       using(converter).map(source, destination.getAddress());
       
   }

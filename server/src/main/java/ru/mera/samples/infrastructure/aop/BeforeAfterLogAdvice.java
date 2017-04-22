@@ -44,7 +44,6 @@ public class BeforeAfterLogAdvice {
   @Pointcut("whatIWantToMatch() && ! whatIDontWantToMatch()")
   public void allIWantToMatch(){}
   
-  // TODO Enable after security implementation
   @Before( "whatIWantToMatch()" )
   public void before(JoinPoint joinPoint) {
     final String[] principals = new String[1];

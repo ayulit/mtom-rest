@@ -62,7 +62,6 @@ public abstract class AbstractServiceImpl<T extends AbstractDTO, E extends Abstr
   public T read(Long id) {
     AbstractEntity abstractEntity = getRepository().findById(id);
 
-    // xlitand: Needed for DB filling in Spring Boot. TODO delete in production.
     if (abstractEntity == null) {
         throw new RecordNotFoundException("No record with ID " + id);
     }

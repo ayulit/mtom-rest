@@ -28,24 +28,13 @@ public class ImageResource {
 	@Autowired
 	private ImageService imageService;
 	
-    // Is it necessary? See Spring-REST-Book.
     public ImageResource() {}
-    
-    // TODO delete on production
-	@RequestMapping(value="/hello", method=RequestMethod.GET)
-	public String getTestString() {
-		return "Hello!";
-	}
 	
-    // retrieving an Image by identifier
-    @RequestMapping(value="/{imageId}", method = RequestMethod.GET)  // like @GET in JAX-RS
+    @RequestMapping(value="/{imageId}", method = RequestMethod.GET)
     public ImageDTO getImage(@PathVariable("imageId") long id) {
 
-        // Data Transfer Object (DTO) pattern:
-        // It provides a useful decoupling between the persistence and presentation layers.
         ImageDTO imageDTO = imageService.read(id);
 
-        // TODO IMPORTANT!!! Remove this block on production and while testing
         BufferedImage bufferedImage = imageDTO.getImage();
         File outputfile = new File("image.png");
         logger.info("outputfile's path: " + outputfile.getAbsolutePath());
@@ -71,7 +60,6 @@ public class ImageResource {
     @RequestMapping(value = "/{imageId}", method = RequestMethod.PUT)
     public ImageDTO updateImage(@PathVariable("imageId") long id, @RequestBody ImageDTO updatedImage) {
 
-        // TODO implement try-catch with RecordNotFoundException
         ImageDTO imageDTO = imageService.read(id);
         
         imageDTO.setName(updatedImage.getName());
@@ -85,8 +73,6 @@ public class ImageResource {
     @PreAuthorize("hasRole('ADMIN')")
     @RequestMapping(value = "/{imageId}", method = RequestMethod.DELETE)
     public void deleteImage(@PathVariable("imageId") long id) {
-            
-        // TODO implement try-catch with RecordNotFoundException
         imageService.delete(id);
     }
     

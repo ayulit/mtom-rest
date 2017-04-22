@@ -5,6 +5,7 @@ package ru.mera.samples.presentation.rest;
  *
  * @author Ludovic Dewailly
  */
+@SuppressWarnings("serial")
 public class RecordNotFoundException extends RuntimeException {
 
     public RecordNotFoundException(String description) {

@@ -27,7 +27,6 @@ public abstract class AbstractNamedRepository<T extends AbstractNamedEntity> ext
       CriteriaBuilder             cb              = entityManager.getCriteriaBuilder();
       CriteriaQuery<T>            cq              = cb.createQuery(persistentClass);
       Root<T>                     rootEntry       = cq.from(persistentClass);
-      // "name" - column, name - variable
       cq.select(rootEntry).where(cb.equal(rootEntry.get("name"), name));
       return entityManager.createQuery(cq).getSingleResult();
   }

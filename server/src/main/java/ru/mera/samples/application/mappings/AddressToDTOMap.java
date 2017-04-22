@@ -1,6 +1,9 @@
 package ru.mera.samples.application.mappings;
 
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.modelmapper.AbstractConverter;
 import org.modelmapper.Converter;
 import org.modelmapper.PropertyMap;
@@ -9,12 +12,6 @@ import org.slf4j.LoggerFactory;
 
 import ru.mera.samples.application.dto.AddressDTO;
 import ru.mera.samples.domain.entities.AddressEntity;
-import ru.mera.samples.domain.entities.UserEntity;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class AddressToDTOMap extends PropertyMap<AddressEntity, AddressDTO> {
 
@@ -36,7 +33,6 @@ public class AddressToDTOMap extends PropertyMap<AddressEntity, AddressDTO> {
                 return null;                    
             } else {
                 
-                // Lambda here
                 source.getResidents().forEach(userEntity -> {
                     StringBuilder     fullNameBuilder = new StringBuilder();
                     fullNameBuilder.append(userEntity.getLastName()).append(LITTERAL).append(userEntity.getFirstName());
