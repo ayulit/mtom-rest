@@ -21,6 +21,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.mera.samples.application.dto.AddressDTO;
 import ru.mera.samples.domain.dao.AddressRepository;
+import ru.mera.samples.domain.dao.UserRepository;
 import ru.mera.samples.domain.entities.AddressEntity;
 
 
@@ -32,6 +33,9 @@ public class AddressServiceImpl extends AbstractServiceImpl<AddressDTO,AddressEn
   private AddressRepository addressRepository;
 
   // XXX Why protected not public ?!
+  @Autowired
+  private UserRepository userRepository;
+  
   @Override
   protected AddressRepository getRepository() {
     return addressRepository;
@@ -43,7 +47,10 @@ public class AddressServiceImpl extends AbstractServiceImpl<AddressDTO,AddressEn
       AddressEntity addressEntity = addressRepository.findById(id);
       
       // Lambda here
-      addressEntity.getResidents().forEach(userEntity -> userEntity.setAddress(null));      
+      addressEntity.getResidents().forEach(userEntity -> {
+          userEntity.setAddress(null);
+          userRepository.update(userEntity);
+      });      
       addressEntity.getResidents().clear();
 
       addressRepository.delete(addressEntity);
