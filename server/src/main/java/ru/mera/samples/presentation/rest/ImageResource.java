@@ -6,6 +6,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,7 +22,9 @@ import ru.mera.samples.application.service.ImageService;
 @RestController
 @RequestMapping("/images")
 public class ImageResource {
-	
+
+    private static final Logger logger = LoggerFactory.getLogger(ImageResource.class);
+    
 	@Autowired
 	private ImageService imageService;
 	
@@ -44,6 +48,7 @@ public class ImageResource {
         // TODO IMPORTANT!!! Remove this block on production and while testing
         BufferedImage bufferedImage = imageDTO.getImage();
         File outputfile = new File("image.png");
+        logger.info("outputfile's path: " + outputfile.getAbsolutePath());
         try {
             ImageIO.write(bufferedImage, "png", outputfile);
         } catch (IOException e) {
